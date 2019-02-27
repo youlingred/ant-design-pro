@@ -115,7 +115,7 @@ $ npm run docker-prod:build
 
 Open the project in Gitpod (free online dev environment for GitHub) and start coding immediately.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ant-design/ant-design-pro)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ant-design/ant-design-pro) [![Greenkeeper badge](https://badges.greenkeeper.io/ant-design/ant-design-pro.svg)](https://greenkeeper.io/)
 
 More instructions at [documentation](http://pro.ant.design/docs/getting-started).
 
