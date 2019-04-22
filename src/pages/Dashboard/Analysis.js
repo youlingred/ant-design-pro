@@ -18,6 +18,7 @@ const OfflineData = React.lazy(() => import('./OfflineData'));
 }))
 class Analysis extends Component {
   state = {
+    loading: true,
     salesType: 'all',
     currentTabKey: '',
     rangePickerValue: getTimeDistance('year'),
@@ -28,6 +29,11 @@ class Analysis extends Component {
     this.reqRef = requestAnimationFrame(() => {
       dispatch({
         type: 'chart/fetch',
+      });
+    });
+    setTimeout(() => {
+      this.setState({
+        loading: false,
       });
     });
   }
@@ -90,8 +96,9 @@ class Analysis extends Component {
   };
 
   render() {
-    const { rangePickerValue, salesType, currentTabKey } = this.state;
-    const { chart, loading } = this.props;
+    const { rangePickerValue, salesType, currentTabKey, loading: StateLoading } = this.state;
+    const { chart, loading: PropsLoading } = this.props;
+    const loading = PropsLoading || StateLoading;
     const {
       visitData,
       visitData2,
