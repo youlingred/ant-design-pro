@@ -46,6 +46,10 @@ const links = [
   activitiesLoading: loading.effects['activities/fetchList'],
 }))
 class Workplace extends PureComponent {
+  state = {
+    loading: true,
+  };
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -60,6 +64,12 @@ class Workplace extends PureComponent {
     dispatch({
       type: 'chart/fetch',
     });
+
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -115,6 +125,7 @@ class Workplace extends PureComponent {
       activitiesLoading,
       chart: { radarData },
     } = this.props;
+    const { loading: stateLoading } = this.state;
 
     const pageHeaderContent =
       currentUser && Object.keys(currentUser).length ? (
@@ -156,7 +167,7 @@ class Workplace extends PureComponent {
 
     return (
       <PageHeaderWrapper
-        loading={currentUserLoading}
+        loading={currentUserLoading || stateLoading}
         content={pageHeaderContent}
         extraContent={extraContent}
       >
@@ -168,7 +179,7 @@ class Workplace extends PureComponent {
               title="进行中的项目"
               bordered={false}
               extra={<Link to="/">全部项目</Link>}
-              loading={projectLoading}
+              loading={projectLoading || stateLoading}
               bodyStyle={{ padding: 0 }}
             >
               {notice.map(item => (
@@ -200,7 +211,7 @@ class Workplace extends PureComponent {
               bordered={false}
               className={styles.activeCard}
               title="动态"
-              loading={activitiesLoading}
+              loading={activitiesLoading || stateLoading}
             >
               <List loading={activitiesLoading} size="large">
                 <div className={styles.activitiesList}>{this.renderActivities()}</div>
@@ -213,6 +224,7 @@ class Workplace extends PureComponent {
               title="快速开始 / 便捷导航"
               bordered={false}
               bodyStyle={{ padding: 0 }}
+              loading={stateLoading}
             >
               <EditableLinkGroup onAdd={() => {}} links={links} linkElement={Link} />
             </Card>
@@ -220,7 +232,7 @@ class Workplace extends PureComponent {
               style={{ marginBottom: 24 }}
               bordered={false}
               title="XX 指数"
-              loading={radarData.length === 0}
+              loading={radarData.length === 0 || stateLoading}
             >
               <div className={styles.chart}>
                 <Radar hasLegend height={343} data={radarData} />
@@ -230,7 +242,7 @@ class Workplace extends PureComponent {
               bodyStyle={{ paddingTop: 12, paddingBottom: 12 }}
               bordered={false}
               title="团队"
-              loading={projectLoading}
+              loading={projectLoading || stateLoading}
             >
               <div className={styles.members}>
                 <Row gutter={48}>

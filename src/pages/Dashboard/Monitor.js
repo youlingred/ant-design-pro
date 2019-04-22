@@ -27,17 +27,27 @@ const havePermissionAsync = new Promise(resolve => {
   loading: loading.models.monitor,
 }))
 class Monitor extends Component {
+  state = {
+    loading: true,
+  };
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
       type: 'monitor/fetchTags',
     });
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 1000);
   }
 
   render() {
-    const { monitor, loading } = this.props;
+    const { loading: StateLoading } = this.state;
+    const { monitor, loading: PropsLoading } = this.props;
     const { tags } = monitor;
-
+    const loading = StateLoading || PropsLoading;
     return (
       <GridContent>
         <Row gutter={24}>
