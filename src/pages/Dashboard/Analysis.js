@@ -35,7 +35,7 @@ class Analysis extends Component {
       this.setState({
         loading: false,
       });
-    });
+    }, 1000);
   }
 
   componentWillUnmount() {
